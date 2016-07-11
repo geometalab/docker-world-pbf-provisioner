@@ -1,0 +1,47 @@
+Config
+#######
+
+Imposm3
+-------
+
+Command: imposm3 import -config config.json -read /data/europe-latest.pbf -write -diff
+
+config:
+    "cachedir": "/data/imposm3/cache",
+    "mapping": "mapping.json",
+    "connection": "postgis://postgres@imposm3_db/postgres",
+    "srid": 4326
+
+
+Results
+#######
+
+On laptop with 4 Cores (8 Threads), 32GB RAM, SSD
+-------------------------------------------------
+
+imposm3:
+
+
+On Server with 32 Cores, 512GB RAM, 10K Drives
+----------------------------------------------
+
+imposm3:
+
+[Jul  4 22:17:08] [INFO] Importing OSM data took: 6h48m53.298594556s
+[Jul  4 22:17:08] [INFO] Imposm took: 7h12m41.474516692s
+
+15:04:27 - 22:17:08
+
+cache: 27G     data/imposm3
+Database: 86G     /var/lib/docker/volumes/952ce9df461e88728ef2fd5f4a6c4511d13aee5da25ede340a8eb43387679143/_data
+
+
+
+osm2pgsql:
+
+real    4617m39.205s
+user    0m48.060s
+sys     0m20.552s
+
+Cache: 32G     data/osm-cache
+Database: 255G    /var/lib/docker/volumes/c87bf45e3379b15de026e2b5417d195486936fb7367bbb7a90ca7e3cc8f4d35a/_data

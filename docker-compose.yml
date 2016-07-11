@@ -1,0 +1,10 @@
+version: '2'
+services:
+  world-pbf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - osm_world_pbf_data:/data/osm/planet/
+volumes:
+  osm_world_pbf_data: {}

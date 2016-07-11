@@ -1,0 +1,33 @@
+version: '2'
+services:
+  imposm3:
+    build:
+      dockerfile: Dockerfile.imposm3
+      context: .
+    volumes:
+      - ./data/:/data
+    depends_on:
+      - imposm3_db
+    command: "imposm3 import -config config.json -read /data/europe-latest.pbf -write -diff"
+    environment:
+      - DBHOST=imposm3_db
+  imposm3_db:
+    image: geometalab/postgis:9.5
+  osm2pgsql:
+    build:
+      dockerfile: Dockerfile.osm2psql
+      context: .
+    volumes:
+      - ./data/:/data
+    depends_on:
+      - osm2pgsql_db
+    command: >
+      osm2pgsql -c
+      --number-processes 8 -H osm2pgsql_db -U postgres -d postgres --slim -C 4000 --flat-nodes /data/osm-cache/persistent-cache-file --prefix osm --hstore --latlon
+      --style /root/styles/terminal.style --tag-transform-script /root/styles/tag_transform_style.lua
+       /data/europe-latest.pbf
+    environment:
+      - DBHOST=osm2pgsql_db
+  osm2pgsql_db:
+    image: geometalab/postgis:9.5
+

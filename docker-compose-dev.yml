@@ -1,0 +1,9 @@
+version: '2'
+services:
+  world-pbf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./pbf_processor:/home/pbf-provisioner/pbf_processor
+      - ./data:/data/osm/planet/
